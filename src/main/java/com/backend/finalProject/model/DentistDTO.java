@@ -19,14 +19,6 @@ public class DentistDTO {
         return id;
     }
 
-    public void setId(Integer id) throws Exception{
-        if(this.id == null){
-            this.id = id;
-        }else{
-            throw new Exception("The dentist already has an id: " + this.id);
-        }
-    }
-
     public String getName() {
         return name;
     }
