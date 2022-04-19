@@ -18,7 +18,8 @@ public class Address {
 
     public Address(){}
 
-    public Address(String street, Integer number, String city, String county) {
+    public Address(Integer id, String street, Integer number, String city, String county) {
+        this.id = id;
         this.street = street;
         this.number = number;
         this.city = city;
@@ -27,6 +28,10 @@ public class Address {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public String getStreet() {

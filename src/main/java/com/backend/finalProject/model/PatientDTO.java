@@ -1,12 +1,14 @@
 package com.backend.finalProject.model;
 
 
+import java.time.LocalDate;
+
 public class PatientDTO {
     private Integer id;
     private String name;
     private String lastName;
     private Integer DNI;
-    private String dischargeDate;
+    private LocalDate dischargeDate;
     private AddressDTO addressDTO;
 
     public PatientDTO() {}
@@ -39,11 +41,11 @@ public class PatientDTO {
         this.DNI = DNI;
     }
 
-    public String getDischargeDate() {
+    public LocalDate getDischargeDate() {
         return dischargeDate;
     }
 
-    public void setDischargeDate(String dischargeDate) {
+    public void setDischargeDate(LocalDate dischargeDate) {
         this.dischargeDate = dischargeDate;
     }
 

@@ -10,12 +10,14 @@ import java.util.Set;
 
 public class AppointmentService implements IAppointmentService {
 
-    @Autowired
-    IAppointmentRepository repository;
+    private final IAppointmentRepository repository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    ObjectMapper mapper;
-
+    public AppointmentService(IAppointmentRepository repository, ObjectMapper mapper){
+        this.repository = repository;
+        this.mapper = mapper;
+    }
     @Override
     public AppointmentDTO addAppointment(AppointmentDTO appointmentDTO) {
         return null;

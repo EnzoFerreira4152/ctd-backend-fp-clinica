@@ -16,8 +16,10 @@ public class Dentist {
     private Integer id;
 
     private String name;
+
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "professional_registration_number")
     private String professionalRegistrationNumber;
 
@@ -25,10 +27,10 @@ public class Dentist {
     @JsonIgnore
     private Set<Appointment> appointments = new HashSet<>();
 
-    public Dentist() {
-    }
+    public Dentist() {}
 
-    public Dentist(String name, String lastName, String professionalRegistrationNumber) {
+    public Dentist(Integer id, String name, String lastName, String professionalRegistrationNumber) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.professionalRegistrationNumber = professionalRegistrationNumber;
@@ -36,6 +38,10 @@ public class Dentist {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public String getName() {

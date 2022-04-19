@@ -14,10 +14,15 @@ import java.util.Set;
 @Service
 public class DentistService implements IDentistService {
 
+    private final IDentistRepository repository;
+
+    private final ObjectMapper mapper;
+
     @Autowired
-    IDentistRepository repository;
-    @Autowired
-    ObjectMapper mapper;
+    public DentistService(IDentistRepository repository, ObjectMapper mapper){
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     private DentistDTO saveDentist(DentistDTO dentistDTO){
         Dentist dentist = mapper.convertValue(dentistDTO, Dentist.class);

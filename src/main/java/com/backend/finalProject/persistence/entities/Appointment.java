@@ -1,7 +1,5 @@
 package com.backend.finalProject.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -16,7 +14,7 @@ public class Appointment {
 
     private LocalDate date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
 
@@ -24,10 +22,10 @@ public class Appointment {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    public Appointment() {
-    }
+    public Appointment() {}
 
-    public Appointment( LocalDate date, Dentist dentist, Patient patient) {
+    public Appointment(Integer id, LocalDate date, Dentist dentist, Patient patient) {
+        this.id = id;
         this.date = date;
         this.dentist = dentist;
         this.patient = patient;
@@ -37,7 +35,7 @@ public class Appointment {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Integer id){
         this.id = id;
     }
 

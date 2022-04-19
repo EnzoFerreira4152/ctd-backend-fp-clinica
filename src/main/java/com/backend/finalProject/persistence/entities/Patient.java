@@ -17,30 +17,40 @@ public class Patient {
 
     private String name;
     private String lastName;
-    private Integer DNI;
+
+    @Column(unique = true)
+    private Integer dni;
+
     @Column(name = "discharge_date")
     private LocalDate dischargeDate;
 
+    //Unidireccional
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
+    //Bidireccional
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Appointment> appointments;
 
     public Patient(){}
 
-    public Patient(String name, String lastName, Integer DNI, LocalDate dischargeDate, Address address) {
+    public Patient(Integer id, String name, String lastName, Integer dni, LocalDate dischargeDate, Address address) {
+        this.id = id;
         this.name = name;
         this.lastName = lastName;
-        this.DNI = DNI;
+        this.dni = dni;
         this.dischargeDate = dischargeDate;
         this.address = address;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public String getName() {
@@ -59,12 +69,12 @@ public class Patient {
         this.lastName = lastName;
     }
 
-    public Integer getDNI() {
-        return DNI;
+    public Integer getDni() {
+        return dni;
     }
 
-    public void setDNI(Integer DNI) {
-        this.DNI = DNI;
+    public void setDni(Integer dni) {
+        this.dni = dni;
     }
 
     public LocalDate getDischargeDate() {
