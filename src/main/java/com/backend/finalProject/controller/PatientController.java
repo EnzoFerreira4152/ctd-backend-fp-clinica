@@ -13,15 +13,15 @@ import java.util.Set;
 @RequestMapping("/patients")
 public class PatientController {
 
-    @Autowired
-    PatientService service;
+    private PatientService service;
 
-    @PostMapping
-    public ResponseEntity<PatientDTO> addPatient(@RequestBody PatientDTO patientDTO){
-        return ResponseEntity.ok(service.addPatient(patientDTO));
+    @Autowired
+    public PatientController(PatientService service){
+        this.service = service;
     }
 
-    @GetMapping(path = "/{id}")
+    //Get one patient by id
+    @GetMapping("/{id}")
     public ResponseEntity<?> findPatientById(@PathVariable Integer id){
         PatientDTO response = service.findPatientById(id);
         if(response != null){
@@ -32,23 +32,32 @@ public class PatientController {
 
     }
 
+    //Get all patients
     @GetMapping
     public ResponseEntity<Set<PatientDTO>> listAllPatient(){
         return ResponseEntity.ok(service.listAllPatients());
     }
 
+    //Add one patient
+    @PostMapping
+    public ResponseEntity<PatientDTO> addPatient(@RequestBody PatientDTO patientDTO){
+        return ResponseEntity.ok(service.addPatient(patientDTO));
+    }
+
+    //Edit one patient
     @PutMapping
     public ResponseEntity<?> modifyPatient(@RequestBody PatientDTO patientDTO){
         return ResponseEntity.ok(service.modifyPatient(patientDTO));
     }
 
-    @DeleteMapping(path = "/{id}")
+    //Delete on patient by id
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDentist(@PathVariable Integer id){
         if(service.findPatientById(id) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
         } else {
             service.deletePatient(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient whit id " + id + " was successfully deleted from the database.");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The patient whit id " + id + " was successfully deleted");
         }
     }
 

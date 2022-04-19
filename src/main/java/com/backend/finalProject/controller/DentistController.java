@@ -13,30 +13,39 @@ import java.util.Set;
 @RequestMapping("/dentists")
 public class DentistController {
 
-    @Autowired
-    DentistService service;
+    private DentistService service;
 
-    @PostMapping
-    public ResponseEntity<DentistDTO> addDentist(@RequestBody DentistDTO dentistDTO){
-        return ResponseEntity.ok(service.addDentist(dentistDTO));
+    @Autowired
+    public DentistController(DentistService service){
+        this.service = service;
     }
 
-    @GetMapping(path = "/{id}")
+    //Get one dentist by id
+    @GetMapping("/{id}")
     public ResponseEntity<DentistDTO> findDentistById(@PathVariable Integer id){
         return ResponseEntity.ok(service.findDentistById(id));
     }
 
+    //Get all dentists
     @GetMapping
     public ResponseEntity<Set<DentistDTO>> listAllDentist(){
         return ResponseEntity.ok(service.listAllDentist());
     }
 
+    //Add one dentist
+    @PostMapping
+    public ResponseEntity<DentistDTO> addDentist(@RequestBody DentistDTO dentistDTO){
+        return ResponseEntity.ok(service.addDentist(dentistDTO));
+    }
+
+    //Edit one dentist
     @PutMapping
     public ResponseEntity<DentistDTO> modifyDentist(@RequestBody DentistDTO dentistDTO){
         return ResponseEntity.ok(service.modifyDentist(dentistDTO));
     }
 
-    @DeleteMapping(path = "/{id}")
+    //Delete on dentist by id
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDentist(@PathVariable Integer id){
         if(service.findDentistById(id) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Dentist not found");
