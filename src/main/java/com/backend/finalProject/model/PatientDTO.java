@@ -9,16 +9,7 @@ public class PatientDTO {
     private String dischargeDate;
     private AddressDTO addressDTO;
 
-    public PatientDTO() {
-    }
-
-    public PatientDTO(String name, String lastName, Integer DNI, String dischargeDate, AddressDTO addressDTO) {
-        this.setName(name);
-        this.setLastName(lastName);
-        this.setDNI(DNI);
-        this.setDischargeDate(dischargeDate);
-        this.setAddress(addressDTO);
-    }
+    public PatientDTO() {}
 
     public Integer getId(){
         return this.id;

@@ -6,14 +6,7 @@ public class DentistDTO {
     private String lastName;
     private String professionalRegistrationNumber;
 
-    public DentistDTO() {
-    }
-
-    public DentistDTO(String name, String lastName, String professionalRegistrationNumber) {
-        this.setName(name);
-        this.setLastName(lastName);
-        this.setProfessionalRegistrationNumber(professionalRegistrationNumber);
-    }
+    public DentistDTO() {}
 
     public Integer getId() {
         return id;
@@ -42,15 +35,5 @@ public class DentistDTO {
     public void setProfessionalRegistrationNumber(String professionalRegistrationNumber) {
         this.professionalRegistrationNumber = professionalRegistrationNumber;
     }
-
-    @Override
-    public String toString() {
-        return "DentistDTO{" +
-                "name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", professionalRegistrationNumber=" + professionalRegistrationNumber +
-                '}';
-    }
-
 
 }
