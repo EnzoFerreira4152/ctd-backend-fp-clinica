@@ -16,6 +16,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Realiza todas las operaciones basicas sobre la base de datos para administrar y obtener los datos de cada turno.
+ * Implementa la interfaz IAppointmentService
+ */
 @Service
 public class AppointmentService implements IAppointmentService {
 
@@ -52,7 +56,7 @@ public class AppointmentService implements IAppointmentService {
             p_Obj = patient.get();
             appointment.setDentist(d_Obj);
             appointment.setPatient(p_Obj);
-        }else{
+        }else {
             //TODO: debe arrojar una excepción
         }
 
@@ -82,7 +86,7 @@ public class AppointmentService implements IAppointmentService {
 
         if (appointmentDTO.getDate() != null && appointmentDTO.getDentistId() != null && appointmentDTO.getPatientId() != null) {
             response = saveAppointment(appointmentDTO);
-        }else{
+        }else {
             //TODO: debe arrojar una excepción
         }
 
@@ -134,18 +138,17 @@ public class AppointmentService implements IAppointmentService {
 
             if (appointmentDTO.getDate() == null) {
                 appointmentDTO.setDate(prevAppointmentData.getDate());
-
-            }if (appointmentDTO.getDentistId() == null) {
+            }
+            if (appointmentDTO.getDentistId() == null) {
                 appointmentDTO.setDentistId(prevAppointmentData.getDentist().getId());
-
-            }if (appointmentDTO.getPatientId() == null) {
+            }
+            if (appointmentDTO.getPatientId() == null) {
                 appointmentDTO.setPatientId(prevAppointmentData.getPatient().getId());
             }
 
         }else{
             //TODO: debe retornar una excepción
         }
-
 
         return saveAppointment(appointmentDTO);
     }
