@@ -38,7 +38,7 @@ public class AppointmentService implements IAppointmentService {
 
     /**
      * Guarda un nuevo turno o un turno que necesita ser modificado.
-     * Chequea que tanto el paciente y el odontólogo que se van a insertar en el turno existan o sino retorna una excepción.
+     * Chequea que tanto el paciente y el odontólogo que se van a insertar en el turno existan, si no retorna una excepción.
      * Guarda el turno creado en las colecciones de turnos del paciente correspondiente y del odontologo correspondiente.
      * @param appointmentDTO El DTO del turno con todos los datos necesarios. No deben ser nulos.
      * @return AppointmentDTO
@@ -95,7 +95,7 @@ public class AppointmentService implements IAppointmentService {
 
     /**
      * Lista todos los turnos existentes en la base de datos.
-     * Devuelve una colección de DTOs de turnos, por lo que solo están presentes, la fecha del turno y los ID del paciente y del odontólogo
+     * Devuelve una colección de DTO de turnos, por lo que solo están presentes, la fecha del turno y los ID del paciente y del odontólogo
      * @return Set AppointmentDTO
      */
     @Override
@@ -124,6 +124,7 @@ public class AppointmentService implements IAppointmentService {
     }
 
     /**
+     * Modifica los datos de un turno que ya existe en la base de datos.
      * Corrobora que el turno exista antes de intentar modificarlo. Si no existe retorna una excepción.
      * Si algúno de los campos llegan nulos, los completa autamáticamente con los datos del turno guardado previamente, dandose por entendido que los datos nulos no tenian intención de ser modificados.
      * @param appointmentDTO El DTO del turno con todos los datos que se requieren alterar. Pueden ser nulos aquellos que no se modifiquen.

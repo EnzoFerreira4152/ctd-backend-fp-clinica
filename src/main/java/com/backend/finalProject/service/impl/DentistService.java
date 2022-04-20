@@ -40,7 +40,7 @@ public class DentistService implements IDentistService {
     }
 
     /**
-     * Guarda un nuevo odontólogo en la base de datos. No debe tener datos nulos d elo contrario retorna una excepción.
+     * Guarda un nuevo odontólogo en la base de datos. No debe tener datos nulos de lo contrario retorna una excepción.
      * @param dentistDTO El DTO del odontólogo con todos los datos necesarios. No deben ser nulos.
      * @return DentistDTO
      */
@@ -81,7 +81,7 @@ public class DentistService implements IDentistService {
 
     /**
      * Modifica los datos de un odontólogo que ya exista en la base de datos.
-     * Corrobora que el odontólogo exista antes de modificarlo.
+     * Corrobora que el odontólogo exista antes de modificarlo. Si no existe retorna una excepción.
      * Si alguno de los datos que llegan es nulo, los completa automaticamente con los datos del odontólogo guardado previamente, dandose por entendido que no los datos nulos no tenian intención de ser modificados.
      * @param dentistDTO El DTO de odontólogo con todos los datos que se requieran alterar. Puede tener campos nulos.
      * @return DentistDTO
