@@ -1,8 +1,6 @@
 package com.backend.finalProject.service.impl;
 
 import com.backend.finalProject.model.AppointmentDTO;
-import com.backend.finalProject.model.DentistDTO;
-import com.backend.finalProject.model.PatientDTO;
 import com.backend.finalProject.persistence.entities.Appointment;
 import com.backend.finalProject.persistence.entities.Dentist;
 import com.backend.finalProject.persistence.entities.Patient;
@@ -22,8 +20,8 @@ import java.util.Set;
 public class AppointmentService implements IAppointmentService {
 
     private final IAppointmentRepository repository;
-    private final IPatientRepository p_repository;
     private final IDentistRepository d_repository;
+    private final IPatientRepository p_repository;
     private final ObjectMapper mapper;
 
     @Autowired
@@ -34,50 +32,99 @@ public class AppointmentService implements IAppointmentService {
         this.mapper = mapper;
     }
 
-    //Se utiliza tanto para guardar un turno nuevo como para modificarlo
+    /**
+     * Guarda un nuevo turno o un turno que necesita ser modificado.
+     * Chequea que tanto el paciente y el odontólogo que se van a insertar en el turno existan o sino retorna una excepción.
+     * Guarda el turno creado en las colecciones de turnos del paciente correspondiente y del odontologo correspondiente.
+     * @param appointmentDTO El DTO del turno con todos los datos necesarios. No deben ser nulos.
+     * @return AppointmentDTO
+     */
     private AppointmentDTO saveAppointment(AppointmentDTO appointmentDTO){
-        Optional<Patient> patient = p_repository.findById(appointmentDTO.getPatient_id());
-        Optional<Dentist> dentist = d_repository.findById(appointmentDTO.getDentist_id());
-
         Appointment appointment = mapper.convertValue(appointmentDTO, Appointment.class);
 
+        Optional<Dentist> dentist = d_repository.findById(appointmentDTO.getDentistId());
+        Optional<Patient> patient = p_repository.findById(appointmentDTO.getPatientId());
+        Dentist d_Obj = null;
+        Patient p_Obj = null;
+
         if (patient.isPresent() && dentist.isPresent()) {
-            appointment.setDate(appointmentDTO.getDate());
-            appointment.setDentist(dentist.get());
-            appointment.setPatient(patient.get());
+            d_Obj = dentist.get();
+            p_Obj = patient.get();
+            appointment.setDentist(d_Obj);
+            appointment.setPatient(p_Obj);
         }else{
             //TODO: debe arrojar una excepción
         }
 
-        AppointmentDTO response = mapper.convertValue(repository.save(appointment), AppointmentDTO.class);
-        response.setDentist_id(appointment.getDentist().getId());
-        response.setPatient_id(appointment.getPatient().getId());
+        Appointment savedAppointment = repository.save(appointment);
+
+        d_Obj.getAppointments().add(savedAppointment);
+        p_Obj.getAppointments().add(savedAppointment);
+        d_repository.save(d_Obj);
+        p_repository.save(p_Obj);
+
+        AppointmentDTO response = mapper.convertValue(savedAppointment, AppointmentDTO.class);
+
+        response.setDentistId(appointment.getDentist().getId());
+        response.setPatientId(appointment.getPatient().getId());
 
         return response;
     }
 
+    /**
+     * Guarda un nuevo turno. Ningúno de sus campos debe estar vacío o nulo, de lo contrario retorna un excepción.
+     * @param appointmentDTO El DTO del turno con todos los datos necesarios. No deben ser nulos.
+     * @return AppointmentDTO
+     */
     @Override
     public AppointmentDTO addAppointment(AppointmentDTO appointmentDTO) {
-        return saveAppointment(appointmentDTO);
+        AppointmentDTO response = new AppointmentDTO();
+
+        if (appointmentDTO.getDate() != null && appointmentDTO.getDentistId() != null && appointmentDTO.getPatientId() != null) {
+            response = saveAppointment(appointmentDTO);
+        }else{
+            //TODO: debe arrojar una excepción
+        }
+
+        return response;
     }
 
+    /**
+     * Lista todos los turnos existentes en la base de datos.
+     * Devuelve una colección de DTOs de turnos, por lo que solo están presentes, la fecha del turno y los ID del paciente y del odontólogo
+     * @return Set AppointmentDTO
+     */
     @Override
     public Set<AppointmentDTO> listAllAppointment() {
         Set<AppointmentDTO> list = new HashSet<>();
+
         for (Appointment appointment : repository.findAll()) {
-            AppointmentDTO appointmentDTO = mapper.convertValue(appointment, AppointmentDTO.class);
-            appointmentDTO.setDentist_id(appointment.getDentist().getId());
-            appointmentDTO.setPatient_id(appointment.getPatient().getId());
-            list.add(appointmentDTO);
+            AppointmentDTO a_dto = mapper.convertValue(appointment, AppointmentDTO.class);
+
+            a_dto.setDentistId(appointment.getDentist().getId());
+            a_dto.setPatientId(appointment.getPatient().getId());
+
+            list.add(a_dto);
         }
         return list;
     }
 
+    /**
+     * Busca en la base de datos el turno coincidente con el ID entregado.
+     * @param id ID con el que se quiere buscar el turno
+     * @return AppointmentDTO
+     */
     @Override
     public AppointmentDTO findAppointmentById(Integer id) {
         return mapper.convertValue(repository.findById(id), AppointmentDTO.class);
     }
 
+    /**
+     * Corrobora que el turno exista antes de intentar modificarlo. Si no existe retorna una excepción.
+     * Si algúno de los campos llegan nulos, los completa autamáticamente con los datos del turno guardado previamente, dandose por entendido que los datos nulos no tenian intención de ser modificados.
+     * @param appointmentDTO El DTO del turno con todos los datos que se requieren alterar. Pueden ser nulos aquellos que no se modifiquen.
+     * @return AppointmentDTO
+     */
     @Override
     public AppointmentDTO modifyAppointment(AppointmentDTO appointmentDTO) {
         Optional<Appointment> appointment = repository.findById(appointmentDTO.getId());
@@ -88,11 +135,11 @@ public class AppointmentService implements IAppointmentService {
             if (appointmentDTO.getDate() == null) {
                 appointmentDTO.setDate(prevAppointmentData.getDate());
 
-            }if (appointmentDTO.getDentist_id() == null) {
-                appointmentDTO.setDentist_id(prevAppointmentData.getDentist().getId());
+            }if (appointmentDTO.getDentistId() == null) {
+                appointmentDTO.setDentistId(prevAppointmentData.getDentist().getId());
 
-            }if (appointmentDTO.getPatient_id() == null) {
-                appointmentDTO.setPatient_id(prevAppointmentData.getPatient().getId());
+            }if (appointmentDTO.getPatientId() == null) {
+                appointmentDTO.setPatientId(prevAppointmentData.getPatient().getId());
             }
 
         }else{
@@ -103,6 +150,11 @@ public class AppointmentService implements IAppointmentService {
         return saveAppointment(appointmentDTO);
     }
 
+
+    /**
+     * Borra de la base de datos un turno coincidente con el ID entregado.
+     * @param id ID con el que se desea indicar que turno borrar.
+     */
     @Override
     public void deleteAppointment(Integer id) {
         repository.deleteById(id);

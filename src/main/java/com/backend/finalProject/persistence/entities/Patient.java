@@ -93,5 +93,11 @@ public class Patient {
         this.address = address;
     }
 
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
 
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 }

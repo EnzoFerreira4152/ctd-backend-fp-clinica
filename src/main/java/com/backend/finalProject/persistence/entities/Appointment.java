@@ -14,10 +14,12 @@ public class Appointment {
 
     private LocalDate date;
 
+    //Bidireccional
     @ManyToOne
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
 
+    //Bidireccional
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;

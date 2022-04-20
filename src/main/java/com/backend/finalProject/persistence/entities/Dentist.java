@@ -23,6 +23,7 @@ public class Dentist {
     @Column(name = "professional_registration_number")
     private String professionalRegistrationNumber;
 
+    //Bidireccional
     @OneToMany(mappedBy = "dentist", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Appointment> appointments = new HashSet<>();
@@ -66,5 +67,13 @@ public class Dentist {
 
     public void setProfessionalRegistrationNumber(String professionalRegistrationNumber) {
         this.professionalRegistrationNumber = professionalRegistrationNumber;
+    }
+
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }
