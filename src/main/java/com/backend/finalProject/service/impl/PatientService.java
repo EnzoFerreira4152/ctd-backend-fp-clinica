@@ -1,6 +1,5 @@
 package com.backend.finalProject.service.impl;
 
-
 import com.backend.finalProject.model.AddressDTO;
 import com.backend.finalProject.model.PatientDTO;
 import com.backend.finalProject.persistence.entities.Patient;
@@ -55,20 +54,18 @@ public class PatientService implements IPatientService {
     public PatientDTO modifyPatient(PatientDTO patientDTO) {
         Optional<Patient> patient = repository.findById(patientDTO.getId());
 
-        if(patient.isPresent()) {
-            Patient previousPatientData = patient.get();
+        if (patient.isPresent()) {
+            Patient prevPatientData = patient.get();
 
-            if (patientDTO.getAddress() == null){
-                AddressDTO address = mapper.convertValue(previousPatientData.getAddress(), AddressDTO.class);
+            if (patientDTO.getAddress() == null) {
+                AddressDTO address = mapper.convertValue(prevPatientData.getAddress(), AddressDTO.class);
                 patientDTO.setAddress(address);
             }
-
             if (patientDTO.getDischargeDate() == null) {
-                patientDTO.setDischargeDate(previousPatientData.getDischargeDate());
+                patientDTO.setDischargeDate(prevPatientData.getDischargeDate());
             }
-
-            if (patientDTO.getDNI() == null){
-                patientDTO.setDNI(previousPatientData.getDni());
+            if (patientDTO.getDNI() == null) {
+                patientDTO.setDNI(prevPatientData.getDni());
             }
 
         }else{

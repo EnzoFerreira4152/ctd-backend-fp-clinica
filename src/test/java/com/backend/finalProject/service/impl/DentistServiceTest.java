@@ -21,20 +21,29 @@ class DentistServiceTest {
 
     @BeforeAll
     void setUp() {
-        DentistDTO dentist_1 = new DentistDTO("Martín", "López", "PR-a2052");
-        DentistDTO dentist_2 = new DentistDTO("José", "Aguirre", "PR-c2171");
-        DentistDTO dentist_3 = new DentistDTO("Facundo", "García", "PR-c2212");
+        DentistDTO dentist_1 = new DentistDTO();
+        dentist_1.setName("Martin");
+        dentist_1.setLastName("López");
+        dentist_1.setProfessionalRegistrationNumber("PR-a2052");
+
+        DentistDTO dentist_2 = new DentistDTO();
+        dentist_2.setName("José");
+        dentist_2.setLastName("Aguirre");
+        dentist_2.setProfessionalRegistrationNumber("PR-c2171");
 
         dentistService.addDentist(dentist_1);
         dentistService.addDentist(dentist_2);
-        dentistService.addDentist(dentist_3);
+
     }
 
     @Test
     void addDentist() {
-        DentistDTO dentist_1 = new DentistDTO("Enzo", "Ferreira", "PR-a3122");
+        DentistDTO dentist = new DentistDTO();
+        dentist.setName("Fernanda");
+        dentist.setLastName("Martinez");
+        dentist.setProfessionalRegistrationNumber("PR-a3122");
 
-        DentistDTO response = dentistService.addDentist(dentist_1);
+        DentistDTO response = dentistService.addDentist(dentist);
 
         assertNotNull(response);
     }
@@ -44,7 +53,7 @@ class DentistServiceTest {
         Set<DentistDTO> response = dentistService.listAllDentist();
 
         //Quiero corroborar que el BeforeAll tambien corrió correctamente y persistió los datos
-        assertTrue(response.size() > 3);
+        assertTrue(response.size() > 2);
     }
 
     @Test
@@ -56,7 +65,10 @@ class DentistServiceTest {
 
     @Test
     void modifyDentist() {
-        DentistDTO dentistWithNewData = new DentistDTO("Martín", "López", "PR-c2052");
+        DentistDTO dentistWithNewData = new DentistDTO();
+        dentistWithNewData.setName("Martín");
+        dentistWithNewData.setLastName("López");
+        dentistWithNewData.setProfessionalRegistrationNumber("PR-c2052");
 
         DentistDTO response = dentistService.modifyDentist(dentistWithNewData);
 
@@ -65,9 +77,9 @@ class DentistServiceTest {
 
     @Test
     void deleteDentist() {
-        dentistService.deleteDentist(4);
+        dentistService.deleteDentist(3);
 
-        DentistDTO response = dentistService.findDentistById(4);
+        DentistDTO response = dentistService.findDentistById(3);
 
         assertNull(response);
     }

@@ -24,6 +24,7 @@ public class DentistService implements IDentistService {
         this.mapper = mapper;
     }
 
+    //Se utiliza tanto para guardar un odontologo nuevo como para modificarlo
     private DentistDTO saveDentist(DentistDTO dentistDTO){
         Dentist dentist = mapper.convertValue(dentistDTO, Dentist.class);
         return mapper.convertValue(repository.save(dentist), DentistDTO.class);
