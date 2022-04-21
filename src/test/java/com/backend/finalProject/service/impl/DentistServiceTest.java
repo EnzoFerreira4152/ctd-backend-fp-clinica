@@ -1,5 +1,6 @@
 package com.backend.finalProject.service.impl;
 
+import com.backend.finalProject.exceptions.ResourceNotFoundException;
 import com.backend.finalProject.model.DentistDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -51,14 +52,18 @@ class DentistServiceTest {
     @Test
     void listAllDentist() {
         Set<DentistDTO> response = dentistService.listAllDentist();
-
-        //Quiero corroborar que el BeforeAll tambien corrió correctamente y persistió los datos
         assertTrue(response.size() > 2);
     }
 
     @Test
     void findDentistById() {
-        DentistDTO response = dentistService.findDentistById(2);
+        DentistDTO response = null;
+
+        try{
+            response = dentistService.findDentistById(2);
+        } catch (ResourceNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
 
         assertEquals("José", response.getName());
     }
@@ -70,16 +75,27 @@ class DentistServiceTest {
         dentistWithNewData.setLastName("López");
         dentistWithNewData.setProfessionalRegistrationNumber("PR-c2052");
 
-        DentistDTO response = dentistService.modifyDentist(dentistWithNewData);
+        DentistDTO response = null;
+
+        try {
+            response = dentistService.modifyDentist(dentistWithNewData);
+        } catch (ResourceNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
 
         assertEquals("PR-c2052", response.getProfessionalRegistrationNumber());
     }
 
     @Test
     void deleteDentist() {
-        dentistService.deleteDentist(3);
+        DentistDTO response = new DentistDTO();
 
-        DentistDTO response = dentistService.findDentistById(3);
+        try{
+            dentistService.deleteDentist(3);
+            response = dentistService.findDentistById(3);
+        } catch (ResourceNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
 
         assertNull(response);
     }

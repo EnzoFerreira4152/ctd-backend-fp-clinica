@@ -1,5 +1,7 @@
 package com.backend.finalProject.service.impl;
 
+import com.backend.finalProject.exceptions.BadRequestException;
+import com.backend.finalProject.exceptions.ResourceNotFoundException;
 import com.backend.finalProject.model.DentistDTO;
 import com.backend.finalProject.persistence.entities.Dentist;
 import com.backend.finalProject.persistence.repository.IDentistRepository;
@@ -40,24 +42,21 @@ public class DentistService implements IDentistService {
     }
 
     /**
-     * Guarda un nuevo odontólogo en la base de datos. No debe tener datos nulos de lo contrario retorna una excepción.
+     * Guarda un nuevo odontólogo en la base de datos. No debe tener datos nulos de lo contrario arroja una excepción.
      * @param dentistDTO El DTO del odontólogo con todos los datos necesarios. No deben ser nulos.
      * @return DentistDTO
      */
     @Override
     public DentistDTO addDentist(DentistDTO dentistDTO){
-        DentistDTO response = new DentistDTO();
-        if(dentistDTO.getName() != null && dentistDTO.getLastName() != null && dentistDTO.getProfessionalRegistrationNumber() != null){
-            response = saveDentist(dentistDTO);
-        }else {
-            //TODO: debe retornar un excepción
+        if(dentistDTO.getName() == null && dentistDTO.getLastName() == null && dentistDTO.getProfessionalRegistrationNumber() == null){
+            throw new BadRequestException("There are some fields whith null vaule. Please check and complete them.");
         }
-        return response;
+        return saveDentist(dentistDTO);
     }
 
     /**
      * Lista todos los odontólogos existentes en la base de datos.
-     * Devuelve una colección de DTOs de odontólogos.
+     * Devuelve una colección de DTO de odontólogos.
      * @return Set
      */
     @Override
@@ -75,19 +74,23 @@ public class DentistService implements IDentistService {
      * @return DentistDTO
      */
     @Override
-    public DentistDTO findDentistById(Integer id){
+    public DentistDTO findDentistById(Integer id) throws ResourceNotFoundException{
+        DentistDTO response = mapper.convertValue(repository.findById(id), DentistDTO.class);
+        if(response == null){
+            throw new ResourceNotFoundException("The dentist whith id " + id + " does not exist.");
+        }
         return mapper.convertValue(repository.findById(id), DentistDTO.class);
     }
 
     /**
      * Modifica los datos de un odontólogo que ya exista en la base de datos.
-     * Corrobora que el odontólogo exista antes de modificarlo. Si no existe retorna una excepción.
-     * Si alguno de los datos que llegan es nulo, los completa automaticamente con los datos del odontólogo guardado previamente, dandose por entendido que no los datos nulos no tenian intención de ser modificados.
+     * Corrobora que el odontólogo exista antes de modificarlo. Si no existe arroja una excepción.
+     * Si alguno de los datos que llegan son nulos, los completa automaticamente con los datos del odontólogo guardado previamente, dandose por entendido que no los datos nulos no tenian intención de ser modificados.
      * @param dentistDTO El DTO de odontólogo con todos los datos que se requieran alterar. Puede tener campos nulos.
      * @return DentistDTO
      */
     @Override
-    public DentistDTO modifyDentist(DentistDTO dentistDTO){
+    public DentistDTO modifyDentist(DentistDTO dentistDTO) throws ResourceNotFoundException{
         Optional<Dentist> dentist = repository.findById(dentistDTO.getId());
 
         if(dentist.isPresent()){
@@ -104,7 +107,7 @@ public class DentistService implements IDentistService {
             }
 
         }else {
-            //TODO: debe retornar una excepción
+            throw new ResourceNotFoundException("The dentist with id "+ dentistDTO.getId() +" you are trying to modify does not exist.");
         }
 
         return saveDentist(dentistDTO);
@@ -115,7 +118,10 @@ public class DentistService implements IDentistService {
      * @param id ID con el que se desea indicar que odontólogo borrar.
      */
     @Override
-    public void deleteDentist(Integer id){
+    public void deleteDentist(Integer id) throws ResourceNotFoundException{
+        if(repository.findById(id).isEmpty()){
+            throw new ResourceNotFoundException("The dentist whith id " + id + "can not be deleted because does not exist.");
+        }
         repository.deleteById(id);
     }
 
