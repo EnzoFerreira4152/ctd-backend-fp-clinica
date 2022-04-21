@@ -1,5 +1,7 @@
 package com.backend.finalProject.service.impl;
 
+import com.backend.finalProject.exceptions.BadRequestException;
+import com.backend.finalProject.exceptions.ResourceNotFoundException;
 import com.backend.finalProject.model.AppointmentDTO;
 import com.backend.finalProject.persistence.entities.Appointment;
 import com.backend.finalProject.persistence.entities.Dentist;
@@ -38,12 +40,12 @@ public class AppointmentService implements IAppointmentService {
 
     /**
      * Guarda un nuevo turno o un turno que necesita ser modificado.
-     * Chequea que tanto el paciente y el odontólogo que se van a insertar en el turno existan, si no retorna una excepción.
+     * Chequea que tanto el paciente y el odontólogo que se van a insertar en el turno existan, si no arroja una excepción.
      * Guarda el turno creado en las colecciones de turnos del paciente correspondiente y del odontologo correspondiente.
      * @param appointmentDTO El DTO del turno con todos los datos necesarios. No deben ser nulos.
      * @return AppointmentDTO
      */
-    private AppointmentDTO saveAppointment(AppointmentDTO appointmentDTO){
+    private AppointmentDTO saveAppointment(AppointmentDTO appointmentDTO) throws ResourceNotFoundException{
         Appointment appointment = mapper.convertValue(appointmentDTO, Appointment.class);
 
         Optional<Dentist> dentist = d_repository.findById(appointmentDTO.getDentistId());
@@ -57,7 +59,7 @@ public class AppointmentService implements IAppointmentService {
             appointment.setDentist(d_Obj);
             appointment.setPatient(p_Obj);
         }else {
-            //TODO: debe arrojar una excepción
+            throw new ResourceNotFoundException("The dentist or patient you are trying to add an appointment for does not exist. Check if any of them are registered in the system before trying again.");
         }
 
         Appointment savedAppointment = repository.save(appointment);
@@ -76,21 +78,16 @@ public class AppointmentService implements IAppointmentService {
     }
 
     /**
-     * Guarda un nuevo turno. Ningúno de sus campos debe estar vacío o nulo, de lo contrario retorna un excepción.
-     * @param appointmentDTO El DTO del turno con todos los datos necesarios. No deben ser nulos.
+     * Guarda un nuevo turno. Ningúno de sus campos debe estar vacío o nulo, de lo contrario arroja un excepción.
+     * @param appointmentDTO El DTO del turno con todos los datos necesarios, menos el ID, este se genera y asigna automáticamente. No deben ser nulos los datos.
      * @return AppointmentDTO
      */
     @Override
-    public AppointmentDTO addAppointment(AppointmentDTO appointmentDTO) {
-        AppointmentDTO response = new AppointmentDTO();
-
-        if (appointmentDTO.getDate() != null && appointmentDTO.getDentistId() != null && appointmentDTO.getPatientId() != null) {
-            response = saveAppointment(appointmentDTO);
-        }else {
-            //TODO: debe arrojar una excepción
+    public AppointmentDTO addAppointment(AppointmentDTO appointmentDTO) throws ResourceNotFoundException{
+        if (appointmentDTO.getDate() == null || appointmentDTO.getDentistId() == null || appointmentDTO.getPatientId() == null) {
+            throw new BadRequestException("There are some fields whith null vaule. Please check and complete them.");
         }
-
-        return response;
+        return saveAppointment(appointmentDTO);
     }
 
     /**
@@ -119,19 +116,23 @@ public class AppointmentService implements IAppointmentService {
      * @return AppointmentDTO
      */
     @Override
-    public AppointmentDTO findAppointmentById(Integer id) {
-        return mapper.convertValue(repository.findById(id), AppointmentDTO.class);
+    public AppointmentDTO findAppointmentById(Integer id) throws ResourceNotFoundException{
+        AppointmentDTO response = mapper.convertValue(repository.findById(id), AppointmentDTO.class);
+        if (response == null){
+            throw new ResourceNotFoundException("The appointment whith id " + id + " does not exist.");
+        }
+        return response;
     }
 
     /**
      * Modifica los datos de un turno que ya existe en la base de datos.
-     * Corrobora que el turno exista antes de intentar modificarlo. Si no existe retorna una excepción.
+     * Corrobora que el turno exista antes de intentar modificarlo. Si no existe arroja una excepción.
      * Si algúno de los campos llegan nulos, los completa autamáticamente con los datos del turno guardado previamente, dandose por entendido que los datos nulos no tenian intención de ser modificados.
-     * @param appointmentDTO El DTO del turno con todos los datos que se requieren alterar. Pueden ser nulos aquellos que no se modifiquen.
+     * @param appointmentDTO El DTO del turno con todos los datos que se requieren alterar y el ID del turno a modificar. Pueden ser nulos aquellos datos que no se deseen cambiar.
      * @return AppointmentDTO
      */
     @Override
-    public AppointmentDTO modifyAppointment(AppointmentDTO appointmentDTO) {
+    public AppointmentDTO modifyAppointment(AppointmentDTO appointmentDTO) throws ResourceNotFoundException{
         Optional<Appointment> appointment = repository.findById(appointmentDTO.getId());
 
         if (appointment.isPresent()) {
@@ -148,19 +149,22 @@ public class AppointmentService implements IAppointmentService {
             }
 
         }else{
-            //TODO: debe retornar una excepción
+            throw new ResourceNotFoundException("The appointment with id "+ appointmentDTO.getId() +" you are trying to modify does not exist.");
         }
 
         return saveAppointment(appointmentDTO);
     }
 
-
     /**
      * Borra de la base de datos un turno coincidente con el ID entregado.
+     * Si el turno a borrar no existe arroja una excepción.
      * @param id ID con el que se desea indicar que turno borrar.
      */
     @Override
-    public void deleteAppointment(Integer id) {
+    public void deleteAppointment(Integer id) throws ResourceNotFoundException{
+        if(repository.findById(id).isEmpty()){
+            throw new ResourceNotFoundException("The appointment whith id " + id + "can not be deleted because does not exist.");
+        }
         repository.deleteById(id);
     }
 

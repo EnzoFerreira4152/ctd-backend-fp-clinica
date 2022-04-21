@@ -1,5 +1,6 @@
 package com.backend.finalProject.controller;
 
+import com.backend.finalProject.exceptions.ResourceNotFoundException;
 import com.backend.finalProject.model.AppointmentDTO;
 import com.backend.finalProject.service.impl.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class AppointmentController {
 
     //Get one apoointment by id
     @GetMapping("/{id}")
-    public ResponseEntity<?> findAppointmentById(@PathVariable("id") Integer id){
+    public ResponseEntity<?> findAppointmentById(@PathVariable("id") Integer id) throws ResourceNotFoundException{
         return ResponseEntity.ok(service.findAppointmentById(id));
     }
 
@@ -37,26 +38,21 @@ public class AppointmentController {
 
     //Add one appointment
     @PostMapping
-    public ResponseEntity<?> addAppointment(@RequestBody AppointmentDTO appointmentDTO){
+    public ResponseEntity<?> addAppointment(@RequestBody AppointmentDTO appointmentDTO) throws ResourceNotFoundException{
         return ResponseEntity.ok(service.addAppointment(appointmentDTO));
     }
 
     //Edit one appointment
     @PutMapping
-    public ResponseEntity<?> modifyAppointment(@RequestBody AppointmentDTO appointmentDTO){
+    public ResponseEntity<?> modifyAppointment(@RequestBody AppointmentDTO appointmentDTO) throws ResourceNotFoundException{
         return ResponseEntity.ok(service.modifyAppointment(appointmentDTO));
     }
 
     //Delete one appointment by id
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAppointment(@PathVariable("id") Integer id){
-        if(service.findAppointmentById(id) == null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Appointment not found");
-        }else{
-            service.deleteAppointment(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The appointment was succesfully deleted");
-        }
-
+    public ResponseEntity<String> deleteAppointment(@PathVariable("id") Integer id) throws ResourceNotFoundException{
+        service.deleteAppointment(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("The appointment was succesfully deleted");
     }
 
 }
