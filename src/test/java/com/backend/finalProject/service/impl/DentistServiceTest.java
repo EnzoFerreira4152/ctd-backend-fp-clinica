@@ -70,33 +70,28 @@ class DentistServiceTest {
 
     @Test
     void modifyDentist() {
-        DentistDTO dentistWithNewData = new DentistDTO();
-        dentistWithNewData.setName("Martín");
-        dentistWithNewData.setLastName("López");
-        dentistWithNewData.setProfessionalRegistrationNumber("PR-c2052");
-
-        DentistDTO response = null;
-
         try {
-            response = dentistService.modifyDentist(dentistWithNewData);
+        DentistDTO dentistWithNewData = dentistService.findDentistById(1);
+        //Cambio su matrícula
+        dentistWithNewData.setProfessionalRegistrationNumber("PR-c3052");
+        DentistDTO response = dentistService.modifyDentist(dentistWithNewData);
+        assertEquals("PR-c3052", response.getProfessionalRegistrationNumber());
+
         } catch (ResourceNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
 
-        assertEquals("PR-c2052", response.getProfessionalRegistrationNumber());
+
     }
 
     @Test
     void deleteDentist() {
-        DentistDTO response = new DentistDTO();
-
         try{
             dentistService.deleteDentist(3);
-            response = dentistService.findDentistById(3);
+            DentistDTO response = dentistService.findDentistById(3);
+            assertNull(response);
         } catch (ResourceNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
-
-        assertNull(response);
     }
 }
