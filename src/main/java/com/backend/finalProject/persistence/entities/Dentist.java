@@ -20,7 +20,7 @@ public class Dentist {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "professional_registration_number")
+    @Column(name = "professional_registration_number", unique = true)
     private String professionalRegistrationNumber;
 
     //Bidireccional
