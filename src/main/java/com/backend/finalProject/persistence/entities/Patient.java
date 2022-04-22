@@ -16,6 +16,8 @@ public class Patient {
     private Integer id;
 
     private String name;
+
+    @Column(name = "last_name")
     private String lastName;
 
     @Column(unique = true)
