@@ -119,7 +119,8 @@ public class DentistService implements IDentistService {
     @Override
     public void deleteDentist(Integer id) throws ResourceNotFoundException{
         if(repository.findById(id).isEmpty()){
-            throw new ResourceNotFoundException("The dentist whith id " + id + "can not be deleted because does not exist.");
+            throw new ResourceNotFoundException("The dentist whith id " + id + " can not be deleted because does not " +
+                    "exist.");
         }
         repository.deleteById(id);
     }

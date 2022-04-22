@@ -1,5 +1,6 @@
 package com.backend.finalProject.service.impl;
 
+import com.backend.finalProject.exceptions.BadRequestException;
 import com.backend.finalProject.exceptions.ResourceNotFoundException;
 import com.backend.finalProject.model.AddressDTO;
 import com.backend.finalProject.model.PatientDTO;
@@ -46,6 +47,9 @@ public class PatientService implements IPatientService {
      */
     @Override
     public PatientDTO addPatient(PatientDTO patientDTO) {
+        if (patientDTO.getName() == null || patientDTO.getLastName() == null || patientDTO.getDischargeDate() == null || patientDTO.getDNI() == null){
+            throw new BadRequestException("There are some fields whith null vaule. Please check and complete them.");
+        }
         return savePatient(patientDTO);
     }
 
