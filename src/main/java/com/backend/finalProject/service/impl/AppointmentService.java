@@ -92,11 +92,10 @@ public class AppointmentService implements IAppointmentService {
 
     /**
      * Lista todos los turnos existentes en la base de datos.
-     * Devuelve una colección de DTO de turnos, por lo que solo están presentes, la fecha del turno y los ID del paciente y del odontólogo
-     * @return Set AppointmentDTO
+     * @return Devuelve una colección de DTO de turnos. Solo están presentes, la fecha del turno el ID del paciente y el ID del odontólogo
      */
     @Override
-    public Set<AppointmentDTO> listAllAppointment() {
+    public Set<AppointmentDTO> listAllAppointments() {
         Set<AppointmentDTO> list = new HashSet<>();
 
         for (Appointment appointment : repository.findAll()) {

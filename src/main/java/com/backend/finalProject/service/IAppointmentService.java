@@ -8,7 +8,7 @@ import java.util.Set;
 public interface IAppointmentService {
 
     AppointmentDTO addAppointment(AppointmentDTO appointmentDTO) throws ResourceNotFoundException;
-    Set<AppointmentDTO> listAllAppointment();
+    Set<AppointmentDTO> listAllAppointments();
     AppointmentDTO findAppointmentById(Integer id) throws ResourceNotFoundException;
     AppointmentDTO modifyAppointment(AppointmentDTO appointmentDTO) throws ResourceNotFoundException;
     void deleteAppointment(Integer id) throws ResourceNotFoundException;

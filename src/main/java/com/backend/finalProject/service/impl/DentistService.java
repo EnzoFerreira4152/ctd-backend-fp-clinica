@@ -56,8 +56,7 @@ public class DentistService implements IDentistService {
 
     /**
      * Lista todos los odontólogos existentes en la base de datos.
-     * Devuelve una colección de DTO de odontólogos.
-     * @return Set
+     * @return Una colección de DTO de odontólogos.
      */
     @Override
     public Set<DentistDTO> listAllDentist(){

@@ -33,7 +33,7 @@ public class AppointmentController {
     //Get all appointments
     @GetMapping
     public ResponseEntity<Set<AppointmentDTO>> listAllAppointments(){
-        return ResponseEntity.ok(service.listAllAppointment());
+        return ResponseEntity.ok(service.listAllAppointments());
     }
 
     //Add one appointment

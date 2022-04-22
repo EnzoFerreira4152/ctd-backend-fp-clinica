@@ -1,5 +1,6 @@
 package com.backend.finalProject.controller;
 
+import com.backend.finalProject.exceptions.ResourceNotFoundException;
 import com.backend.finalProject.model.PatientDTO;
 import com.backend.finalProject.service.impl.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class PatientController {
 
     //Edit one patient
     @PutMapping
-    public ResponseEntity<?> modifyPatient(@RequestBody PatientDTO patientDTO){
+    public ResponseEntity<?> modifyPatient(@RequestBody PatientDTO patientDTO) throws ResourceNotFoundException {
         return ResponseEntity.ok(service.modifyPatient(patientDTO));
     }
 
