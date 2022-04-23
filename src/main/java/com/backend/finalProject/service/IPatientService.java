@@ -9,8 +9,8 @@ public interface IPatientService {
 
     PatientDTO addPatient(PatientDTO patientDTO);
     Set<PatientDTO> listAllPatients();
-    PatientDTO findPatientById(Integer id);
+    PatientDTO findPatientById(Integer id) throws ResourceNotFoundException;
     PatientDTO modifyPatient(PatientDTO patientDTO) throws ResourceNotFoundException;
-    void deletePatient(Integer id);
+    void deletePatient(Integer id) throws ResourceNotFoundException;
 
 }

@@ -23,7 +23,7 @@ public class PatientController {
 
     //Get one patient by id
     @GetMapping("/{id}")
-    public ResponseEntity<?> findPatientById(@PathVariable Integer id){
+    public ResponseEntity<?> findPatientById(@PathVariable Integer id) throws ResourceNotFoundException {
         PatientDTO response = service.findPatientById(id);
         if(response != null){
             return ResponseEntity.ok(response);
@@ -53,7 +53,7 @@ public class PatientController {
 
     //Delete on patient by id
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteDentist(@PathVariable Integer id){
+    public ResponseEntity<String> deleteDentist(@PathVariable Integer id) throws ResourceNotFoundException {
         if(service.findPatientById(id) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
         } else {

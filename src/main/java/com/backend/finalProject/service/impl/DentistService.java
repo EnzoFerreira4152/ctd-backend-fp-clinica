@@ -49,7 +49,7 @@ public class DentistService implements IDentistService {
     @Override
     public DentistDTO addDentist(DentistDTO dentistDTO){
         if(dentistDTO.getName() == null && dentistDTO.getLastName() == null && dentistDTO.getProfessionalRegistrationNumber() == null){
-            throw new BadRequestException("There are some fields whith null vaule. Please check and complete them.");
+            throw new BadRequestException("There are some fields whith null vaule. Please check and complete them");
         }
         return saveDentist(dentistDTO);
     }
@@ -74,11 +74,7 @@ public class DentistService implements IDentistService {
      */
     @Override
     public DentistDTO findDentistById(Integer id) throws ResourceNotFoundException{
-        DentistDTO response = mapper.convertValue(repository.findById(id), DentistDTO.class);
-        if(response == null){
-            throw new ResourceNotFoundException("The dentist whith id " + id + " does not exist.");
-        }
-        return mapper.convertValue(repository.findById(id), DentistDTO.class);
+        return mapper.convertValue(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The dentist whith id " + id + " was not found")), DentistDTO.class);
     }
 
     /**
@@ -106,7 +102,7 @@ public class DentistService implements IDentistService {
             }
 
         }else {
-            throw new ResourceNotFoundException("The dentist with id "+ dentistDTO.getId() +" you are trying to modify does not exist.");
+            throw new ResourceNotFoundException("The dentist with id "+ dentistDTO.getId() +" you are trying to modify does not exist");
         }
 
         return saveDentist(dentistDTO);
@@ -119,8 +115,7 @@ public class DentistService implements IDentistService {
     @Override
     public void deleteDentist(Integer id) throws ResourceNotFoundException{
         if(repository.findById(id).isEmpty()){
-            throw new ResourceNotFoundException("The dentist whith id " + id + " can not be deleted because does not " +
-                    "exist.");
+            throw new ResourceNotFoundException("The dentist whith id " + id + " can not be deleted because does not exist");
         }
         repository.deleteById(id);
     }

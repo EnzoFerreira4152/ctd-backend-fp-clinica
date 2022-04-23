@@ -72,8 +72,8 @@ public class PatientService implements IPatientService {
      * @return PatientDTO
      */
     @Override
-    public PatientDTO findPatientById(Integer id) {
-        return mapper.convertValue(repository.findById(id), PatientDTO.class);
+    public PatientDTO findPatientById(Integer id) throws ResourceNotFoundException {
+        return mapper.convertValue(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("The patient with id " + id + " was not found")), PatientDTO.class);
     }
 
     /**
@@ -113,7 +113,10 @@ public class PatientService implements IPatientService {
      * @param id ID con el que se desea indicar que paciente borrar.
      */
     @Override
-    public void deletePatient(Integer id) {
+    public void deletePatient(Integer id) throws ResourceNotFoundException {
+        if(repository.findById(id).isEmpty()){
+            throw new ResourceNotFoundException("The patient with id " + id + " can not be deleted because does not exist");
+        }
         repository.deleteById(id);
     }
 
