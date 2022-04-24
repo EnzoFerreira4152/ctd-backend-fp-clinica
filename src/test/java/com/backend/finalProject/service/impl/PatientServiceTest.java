@@ -41,6 +41,27 @@ class PatientServiceTest {
     }
 
     @Test
+    void listAllPatients() {
+        AddressDTO address = new AddressDTO();
+        address.setStreet("Entre Ríos");
+        address.setNumber(850);
+        address.setCity("Resistencia");
+        address.setCounty("Chaco");
+
+        PatientDTO patient = new PatientDTO();
+        patient.setName("María");
+        patient.setLastName("González");
+        patient.setDNI(14345578);
+        patient.setDischargeDate(LocalDate.now());
+        patient.setAddress(address);
+
+        patientService.addPatient(patient);
+
+        Set<PatientDTO> list = patientService.listAllPatients();
+        assertTrue(list.size() > 0);
+    }
+
+    @Test
     void addPatient() {
         AddressDTO address = new AddressDTO();
         address.setStreet("Necochea");
@@ -57,12 +78,6 @@ class PatientServiceTest {
 
         PatientDTO response = patientService.addPatient(patient);
         assertNotNull(response);
-    }
-
-    @Test
-    void listAllPatients() {
-        Set<PatientDTO> list = patientService.listAllPatients();
-        assertTrue(list.size() > 0);
     }
 
     @Test
