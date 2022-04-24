@@ -1,0 +1,801 @@
+{
+	"info": {
+		"_postman_id": "14f566f8-e923-4802-b863-4075644bdc77",
+		"name": "Dental Clinic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Dentists CRUD",
+			"item": [
+				{
+					"name": "Add dentists",
+					"item": [
+						{
+							"name": "Add-dentist-1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mauro\",\r\n    \"lastName\": \"Aguirre\",\r\n    \"professionalRegistrationNumber\": \"PR-c4552\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/dentists",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add-dentist-2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Ana\",\r\n    \"lastName\": \"García\",\r\n    \"professionalRegistrationNumber\": \"PR-a3258\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/dentists",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search dentist by id",
+					"item": [
+						{
+							"name": "Get-dentist-1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/dentists/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get-dentist-2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/dentists/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit dentist data",
+					"item": [
+						{
+							"name": "Edit-dentist-1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Mauro\",\r\n    \"lastName\": \"Aguirre\",\r\n    \"professionalRegistrationNumber\": \"PR-c4525\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/dentists",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit-dentist-2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"Mariana\",\r\n    \"lastName\": \"García\",\r\n    \"professionalRegistrationNumber\": \"PR-a3268\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/dentists",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete dentist by id",
+					"item": [
+						{
+							"name": "Delete-dentist-1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/dentists/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete-dentist-2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/dentists/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"dentists",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List-all-dentists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/dentists",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"dentists"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patients CRUD",
+			"item": [
+				{
+					"name": "Add patients",
+					"item": [
+						{
+							"name": "Add-patient-1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Martín\",\r\n    \"lastName\": \"López\",\r\n    \"dischargeDate\": \"2022-04-01\",\r\n    \"dni\": 37312751,\r\n    \"address\": {\r\n        \"street\": \"Alberdi\",\r\n        \"number\": 345,\r\n        \"city\": \"Clorinda\",\r\n        \"county\": \"Formosa\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/patients",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add-patient-2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"José\",\r\n    \"lastName\": \"Aguirre\",\r\n    \"dischargeDate\": \"2022-04-02\",\r\n    \"dni\": 27845692,\r\n    \"address\": {\r\n        \"street\": \"Salta\",\r\n        \"number\": 780,\r\n        \"city\": \"Resistencia\",\r\n        \"county\": \"Chaco\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/patients",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add-patient-3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"María\",\r\n    \"lastName\": \"Herrera\",\r\n    \"dischargeDate\": \"2022-04-05\",\r\n    \"dni\": 38845692,\r\n    \"address\": {\r\n        \"street\": \"Av. Libertador\",\r\n        \"number\": 1720,\r\n        \"city\": \"Buenos Aires\",\r\n        \"county\": \"Buenos Aires\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/patients",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search patients by id",
+					"item": [
+						{
+							"name": "Get-patient-1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/patients/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get-patient-2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/patients/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get-patient-3",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/patients/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit patients data",
+					"item": [
+						{
+							"name": "Modify-patient-1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Mariano\",\r\n    \"lastName\": \"López\",\r\n    \"dischargeDate\": \"2022-04-02\",\r\n    \"dni\": 37312751,\r\n    \"address\": {\r\n        \"street\": \"Alberdi\",\r\n        \"number\": 1250,\r\n        \"city\": \"Clorinda\",\r\n        \"county\": \"Formosa\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/patients",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete patient by id",
+					"item": [
+						{
+							"name": "Delete-patient-1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/patients/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete-patient-2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/patients/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete-patient-3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/patients/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"patients",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List-all-patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/patients",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments CRUD",
+			"item": [
+				{
+					"name": "Add appointments",
+					"item": [
+						{
+							"name": "Add-appointment-1-D1-P1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"date\": \"2022-04-28\",\r\n    \"dentistId\": 1,\r\n    \"patientId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/appointments",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add-appointment-2-D1-P2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"date\": \"2022-04-29\",\r\n    \"dentistId\": 1,\r\n    \"patientId\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/appointments",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add-appointment-3-D2-P3",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"date\": \"2022-04-28\",\r\n    \"dentistId\": 2,\r\n    \"patientId\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/appointments",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search appointments by id",
+					"item": [
+						{
+							"name": "Get-appointment-1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/appointments/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get-appointment-2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/appointments/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get-appointment-3",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/appointments/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit appointments data",
+					"item": [
+						{
+							"name": "Modify-appointment-1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"date\": \"2022-04-27\",\r\n    \"dentistId\": 2,\r\n    \"patientId\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/appointments",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete appointment by id",
+					"item": [
+						{
+							"name": "Delete-appointment-1",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/appointments/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete-appointment-2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/appointments/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete-appointment-3",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/appointments/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"appointments",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "List-all-appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/appointments",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin@admin.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

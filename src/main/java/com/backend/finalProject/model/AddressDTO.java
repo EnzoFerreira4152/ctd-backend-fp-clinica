@@ -9,13 +9,6 @@ public class AddressDTO {
     public AddressDTO() {
     }
 
-    public AddressDTO(String street, Integer number, String city, String county) {
-        this.setStreet(street);
-        this.setNumber(number);
-        this.setCity(city);
-        this.setCounty(county);
-    }
-
     public String getStreet() {
         return street;
     }
