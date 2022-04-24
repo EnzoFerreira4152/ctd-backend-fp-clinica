@@ -12,14 +12,17 @@ Cada uno de ellos posee sus endpoints para poder realizar las operaciones necesa
 - --
 - Usuario USER: user@mail.com
 - Clave: user
-- --
+
 ## Capas del proyecto
 ### Controller:
 La capa ```controller``` se encarga de transefrir las peticiones entrantes que realice el cliente, al ```service```. Con los distintos @RequestMapping mapeamos el Controller a los distintos endpoints de la API, y con ResponseEntity devolvemos respuestas HTTP.
+
 ###Service:
 La capa ```service``` se encarga de realizar las operaciones necesarias para la gestión de la clínica. Se conecta con la capa ```repository``` para realizar las operaciones de persistencia. Además se validan los datos que nos envia el ```controller```.
+
 ###Repository:
 La capa ```repository``` utiliza un ORM, en este caso Hibernate de Springboot, entonces se conecta con la base de datos ```H2``` para realizar las operaciones de persistencia.
+
 ###Base de datos:
 La base de datos utilizada es la de H2. La dirección donde está configurado para la creación de la BD es: ```jdbc:h2:~/dentalClinic```
 - --
