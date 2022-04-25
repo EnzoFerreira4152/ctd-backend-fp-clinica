@@ -29,7 +29,7 @@ La base de datos utilizada es la de H2. La dirección donde está configurado pa
 ## Endpoints
 A continuación se muestran los endpoints de toda la aplicación, aún asi en el proyecto se encuentra un archivo endpoints.json que contiene una colección con todos los CRUD necesarios, que pueden ser facilmente importados a POSTMAN para realizar de manera rápida las pruebas.
 
-*Listar* los odontólogos, pacientes y turnos:*
+*Listar los odontólogos, pacientes y turnos:*
 - Listar odontólogos:
   - [GET] /dentists
 - Listar pacientes:
